@@ -1,0 +1,67 @@
+
+If you have the rapseberry pi 2, follow these instruction :
+
+
+1. compile the kernel
+
+sudo apt-get update
+sudo apt-get upgrade
+
+cd /home/pi
+git clone https://github.com/raspberrypi/linux
+
+cd linux
+(was 'cd linux-rpi-4.1.y')
+
+KERNEL=kernel7
+make bcm2709_defconfig
+
+
+
+make menuconfig
+...It loads a command ligne program (gray background)
+Then try to go into the device drivers configuration section, go to HID support, follow "Special HID drivers" and finaly select “penmount touch device”.
+Then save and exit. Back to the black terminal
+
+(if 'make menuconfig' returns error, install it: 
+ sudo apt-get install libncurses5-dev)
+
+(sudo apt-get install bc)
+
+Very long :
+sudo make -j4 zImage modules dtbs
+
+
+sudo make modules_install
+sudo cp arch/arm/boot/dts/*.dtb /boot/
+sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
+sudo cp arch/arm/boot/dts/overlays/README /boot/overlays/
+sudo scripts/mkknlimg arch/arm/boot/zImage /boot/$KERNEL.img
+
+2. Restart the system
+sudo reboot
+
+3. Compile a calibration tool, because the xinput_calibrator that you can install with apt-get install is buggy.
+
+cd /home/pi
+wget http://github.com/downloads/tias/xinput_calibrator/xinput_calibrator-0.7.5.tar.gz
+tar -zxvf xinput_calibrator-0.7.5.tar.gz
+cd xinput_calibrator-0.7.5
+./configure
+make
+sudo make install
+
+Then .... run in a terminal, under X session:
+
+xinput_calibrator
+
+You just press the four crosses, and you copy/paste the snippet that has been generated in the terminal, in /etc/X11/xorg.conf/99-calibration.conf
+
+4. restart the system
+sudo reboot
+
+5. Touch the screen and be happy !!!!
+
+GitHub
+raspberrypi/linux
+Contribute to linux development by creating an account on GitHub.
