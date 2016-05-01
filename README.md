@@ -1,6 +1,6 @@
-#Penmount TouchScree install procedure for Raspberry PI and drivers
+#Penmount TouchScreen install procedure for Raspberry PI and drivers
 
-In this repository you can find a complete procedure to compile Rasbian kernel including Penmount TouchScreen Drivers.
+In this repository you can find a complete procedure to compile Rasbian kernel to include Penmount TouchScreen Drivers.
 
 The procedure "how to install touch screen driver.txt" is very long but works!
 
